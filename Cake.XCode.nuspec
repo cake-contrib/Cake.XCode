@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+      <id>Cake.XCode</id>
+      <version>1.0.1</version>
+      <authors>Redth</authors>
+      <owners>Redth</owners>
+      <title>Cake.XCode</title>
+      <description>Cake Build addon for XCode and CocoaPods.</description>
+      <summary>XCode and CocoaPods addon for cake build.</summary>
+      <licenseUrl>https://raw.githubusercontent.com/Redth/Cake.XCode/master/LICENSE.md</licenseUrl>
+      <projectUrl>https://github.com/Redth/Cake.XCode</projectUrl>
+      <iconUrl>https://raw.githubusercontent.com/Redth/Cake.XCode/master/icon.png</iconUrl>
+      <requireLicenseAcceptance>false</requireLicenseAcceptance>
+      <copyright>Copyright (c) Redth 2015</copyright>
+      <releaseNotes>Initial Release</releaseNotes>
+      <tags>Cake Script Build XCode CocoaPods Pod</tags>
+
+      <dependencies>
+         <dependency id="Cake.Core" version="0.5.4" />
+      </dependencies>
+   </metadata>
+
+   <files>
+      <file src="./Cake.XCode/bin/Release/Cake.XCode.dll" target="lib/net45" />
+      <file src="./Cake.XCode/bin/Release/Cake.XCode.xml" target="lib/net45" />      
+   </files>
+</package>

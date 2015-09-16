@@ -1,0 +1,6 @@
+workspace 'FieldExporter'
+xcodeproj 'FieldExporter/FieldExporter.xcodeproj'
+
+platform :ios, '7.0'
+pod 'GoogleAnalytics', '3.13'
+
