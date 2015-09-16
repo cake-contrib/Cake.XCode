@@ -1,8 +1,9 @@
-﻿using NUnit.Framework;
-using System;
-using Cake.XCode.Tests.Fakes;
+﻿using System;
+using Cake.CocoaPods;
 using Cake.Common.IO;
 using Cake.Core.IO;
+using Cake.XCode.Tests.Fakes;
+using NUnit.Framework;
 
 namespace Cake.XCode.Tests
 {

@@ -36,9 +36,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="XCodeAliases.cs" />
     <Compile Include="CocoaPodRunner.cs" />
     <Compile Include="XCodeBuildRunner.cs" />
+    <Compile Include="CocoaPodAliases.cs" />
+    <Compile Include="XCodeAliases.cs" />
+    <Compile Include="Namespaces.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

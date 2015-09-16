@@ -1,10 +1,10 @@
 ﻿using System;
-using Cake.Core.Utilities;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using Cake.Core;
 using Cake.Core.IO;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using System.Linq;
+using Cake.Core.Utilities;
 
 namespace Cake.XCode
 {
@@ -17,13 +17,13 @@ namespace Cake.XCode
         /// Gets or sets the display name of the SDK.
         /// </summary>
         /// <value>The display name.</value>
-        public string DisplayName { get;set; }
+        public string DisplayName { get; set; }
 
         /// <summary>
         /// Gets or sets the SDK value to use in XCodeBuild.
         /// </summary>
         /// <value>The sdk value.</value>
-        public string SdkValue { get;set; }
+        public string SdkValue { get; set; }
     }
 
     /// <summary>
@@ -35,7 +35,7 @@ namespace Cake.XCode
         /// Gets or sets the xcodebuild path.
         /// </summary>
         /// <value>The tool path.</value>
-        public FilePath ToolPath { get;set; }
+        public FilePath ToolPath { get; set; }
     }
 
     /// <summary>
@@ -46,65 +46,65 @@ namespace Cake.XCode
         /// <summary>
         /// Provide additional status output
         /// </summary>
-        public bool Verbose { get;set; }
+        public bool Verbose { get; set; }
 
         /// <summary>
         /// Check if any First Launch tasks need to be performed
         /// </summary>
-        public bool CheckFirstLaunchStatus { get;set; }
+        public bool CheckFirstLaunchStatus { get; set; }
 
         /// <summary>
         /// Builds the given Project NAME
         /// </summary>
         /// <value>The name of the project.</value>
-        public string Project { get;set; }
+        public string Project { get; set; }
 
         /// <summary>
         /// Builds the given Target NAME
         /// </summary>
         /// <value>The name of the target.</value>
-        public string Target { get;set; }
+        public string Target { get; set; }
 
         /// <summary>
         /// Builds all the targets
         /// </summary>
-        public bool AllTargets { get;set; }
+        public bool AllTargets { get; set; }
 
         /// <summary>
         /// Builds the given Workspace
         /// </summary>
         /// <value>The  workspace.</value>
-        public FilePath Workspace { get;set; }
+        public FilePath Workspace { get; set; }
 
         /// <summary>
         /// Builds the given Scheme NAME
         /// </summary>
         /// <value>The name of the scheme.</value>
-        public string Scheme { get;set; }
+        public string Scheme { get; set; }
 
         /// <summary>
         /// Use the build configuration NAME for building each target
         /// </summary>
         /// <value>The name of the configuration.</value>
-        public string Configuration { get;set; }
+        public string Configuration { get; set; }
 
         /// <summary>
         /// Apply the build settings defined in the file as overrides
         /// </summary>
         /// <value>The build settings file.</value>
-        public FilePath XcConfig { get;set; }
+        public FilePath XcConfig { get; set; }
 
         /// <summary>
         /// Build each target for the given architecture; this will override architectures defined in the project
         /// </summary>
         /// <value>The architecture to build.</value>
-        public string Arch { get;set; }
+        public string Arch { get; set; }
 
         /// <summary>
         /// The SDK to use as the base SDK when building the project
         /// </summary>
         /// <value>The value of the sdk.</value>
-        public string Sdk { get;set; }
+        public string Sdk { get; set; }
 
         /// <summary>
         /// Use the given toolchain
@@ -116,7 +116,7 @@ namespace Cake.XCode
         /// Use the destination described by key value pairs
         /// </summary>
         /// <value>The destination key value pairs.</value>
-        public Dictionary<string, string> Destination { get;set; }
+        public Dictionary<string, string> Destination { get; set; }
 
         /// <summary>
         /// The timeout in seconds to wait for while searching for the destination device
@@ -127,93 +127,93 @@ namespace Cake.XCode
         /// <summary>
         /// Build independent targets in parallel
         /// </summary>
-        public bool ParallelizeTargets { get;set; }
+        public bool ParallelizeTargets { get; set; }
 
         /// <summary>
         /// Specify the maximum number of concurrent build operations
         /// </summary>
         /// <value>The maximum number of concurrent jobs.</value>
-        public int? Jobs { get;set; }
+        public int? Jobs { get; set; }
 
         /// <summary>
         /// Do everything except actually running the commands
         /// </summary>
-        public bool DryRun { get;set; }
+        public bool DryRun { get; set; }
 
         /// <summary>
         /// Specifies the directory where a result bundle describing what occurred will be placed
         /// </summary>
         /// <value>The result bundle path.</value>
-        public DirectoryPath ResultBundlePath { get;set; }
+        public DirectoryPath ResultBundlePath { get; set; }
 
         /// <summary>
         /// Specifies the directory where build products and other derived data will go
         /// </summary>
         /// <value>The derived data path.</value>
-        public DirectoryPath DerivedDataPath { get;set; }
+        public DirectoryPath DerivedDataPath { get; set; }
 
         /// <summary>
         /// Specifies the directory where any created archives will be placed, or the archive that should be exported
         /// </summary>
         /// <value>The archive path.</value>
-        public DirectoryPath ArchivePath { get;set; }
+        public DirectoryPath ArchivePath { get; set; }
 
         /// <summary>
         /// Specifies that an archive should be exported
         /// </summary>
-        public bool ExportArchive { get;set; }
+        public bool ExportArchive { get; set; }
 
         /// <summary>
         /// Specifies the format that the archive should be exported as (e.g. ipa, pkg, app)
         /// </summary>
         /// <value>The export format.</value>
-        public ExportFormatType? ExportFormat { get;set; }
+        public ExportFormatType? ExportFormat { get; set; }
 
         /// <summary>
         /// Specifies the destination for the product exported from an archive
         /// </summary>
         /// <value>The export path.</value>
-        public DirectoryPath ExportPath { get;set; }
+        public DirectoryPath ExportPath { get; set; }
 
         /// <summary>
         /// Specifies the provisioning profile that should be used when re-signing the exported archive; if possible, implies a signing identity
         /// </summary>
         /// <value>The export provisioning profile name.</value>
-        public string ExportProvisioningProfile { get;set; }
+        public string ExportProvisioningProfile { get; set; }
 
         /// <summary>
         /// Specifies the codesigning identity that should be used to re-sign the exported archive
         /// </summary>
         /// <value>The export signing identity name.</value>
-        public string ExportSigningIdentity { get;set; }
+        public string ExportSigningIdentity { get; set; }
 
         /// <summary>
         /// specifies the installer signing identity that should be used during export; this may be inferable from the ExportSigningIdentity
         /// </summary>
         /// <value>The export installer identity.</value>
-        public string ExportInstallerIdentity { get;set; }
+        public string ExportInstallerIdentity { get; set; }
 
         /// <summary>
         /// Specifies that the signing identity used to create the archive should be used to sign the exported product
         /// original signing identity.
         /// </summary>
-        public bool ExportWithOriginalSigningIdentity { get;set; }
+        public bool ExportWithOriginalSigningIdentity { get; set; }
 
         /// <summary>
         /// Specifies that scheme actions that cannot be performed should be skipped instead of causing a failure
         /// </summary>
-        public bool SkipUnavailableActions { get;set; }
+        public bool SkipUnavailableActions { get; set; }
 
         /// <summary>
         /// Exports completed and outstanding project localizations
         /// </summary>
-        public bool ExportLocalizations { get;set; }
+        public bool ExportLocalizations { get; set; }
 
         /// <summary>
         /// Specifies a path to XLIFF localization files
         /// </summary>
         /// <value>The localization path.</value>
-        public DirectoryPath LocalizationPath { get;set; }
+        public DirectoryPath LocalizationPath { get; set; }
 
         /// <summary>
         /// Specifies optional ISO 639-1 target languages included in a localization export 
@@ -225,15 +225,24 @@ namespace Cake.XCode
         /// Gets or sets a value indicating whether project should be cleaned.
         /// </summary>
         /// <value><c>true</c> if project should be cleaned; otherwise, <c>false</c>.</value>
-        public bool Clean { get;set; }
+        public bool Clean { get; set; }
 
         /// <summary>
         /// Export format type.
         /// </summary>
         public enum ExportFormatType
         {
+            /// <summary>
+            /// A .app package
+            /// </summary>
             App,
+            /// <summary>
+            /// A .pkg installer
+            /// </summary>
             Pkg,
+            /// <summary>
+            /// An iPhone/iPad .ipa
+            /// </summary>
             Ipa
         }
     }
@@ -242,7 +251,7 @@ namespace Cake.XCode
     {
         readonly ICakeEnvironment _cakeEnvironment;
 
-        public XCodeBuildRunner (IFileSystem fileSystem, ICakeEnvironment cakeEnvironment, IProcessRunner processRunner, IGlobber globber) 
+        public XCodeBuildRunner (IFileSystem fileSystem, ICakeEnvironment cakeEnvironment, IProcessRunner processRunner, IGlobber globber)
             : base (fileSystem, cakeEnvironment, processRunner, globber)
         {
             _cakeEnvironment = cakeEnvironment;
@@ -319,7 +328,7 @@ namespace Cake.XCode
 
             if (settings.Destination != null && settings.Destination.Count > 0) {
                 builder.Append ("-destination " +
-                    string.Join (",", settings.Destination.Select (kvp => string.Format ("{0}={1}", kvp.Key, kvp.Value))));
+                string.Join (",", settings.Destination.Select (kvp => string.Format ("{0}={1}", kvp.Key, kvp.Value))));
              
                 if (settings.DestinationTimeout.HasValue)
                     builder.Append ("-destination-timeout " + settings.DestinationTimeout.Value);
@@ -403,12 +412,12 @@ namespace Cake.XCode
             foreach (var line in process.GetStandardOutput ()) {
                 var match = rx.Match (line);
 
-                if (match != null && match.Success && match.Groups != null 
+                if (match != null && match.Success && match.Groups != null
                     && match.Groups ["name"] != null && match.Groups ["value"] != null) {
 
                     yield return new XCodeSdk {
-                        DisplayName = match.Groups["name"].Value,
-                        SdkValue = match.Groups["value"].Value
+                        DisplayName = match.Groups ["name"].Value,
+                        SdkValue = match.Groups ["value"].Value
                     };
                 }
             }
