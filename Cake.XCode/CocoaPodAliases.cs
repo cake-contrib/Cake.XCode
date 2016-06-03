@@ -76,6 +76,7 @@ namespace Cake.CocoaPods
         /// </summary>
         /// <returns>The pod version.</returns>
         /// <param name="context">The context.</param>
+        [CakeMethodAlias]
         public static System.Version CocoaPodVersion (this ICakeContext context)
         {
             return CocoaPodVersion (context, new CocoaPodSettings ());
@@ -87,6 +88,7 @@ namespace Cake.CocoaPods
         /// <returns>The pod version.</returns>
         /// <param name="context">The context.</param>
         /// <param name="settings">The settings.</param>
+        [CakeMethodAlias]
         public static System.Version CocoaPodVersion (this ICakeContext context, CocoaPodSettings settings)
         {
             var r = new CocoaPodRunner (context.FileSystem, context.Environment, context.ProcessRunner, context.Globber);
