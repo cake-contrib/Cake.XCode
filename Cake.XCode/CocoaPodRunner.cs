@@ -3,6 +3,7 @@ using Cake.Core.IO;
 using Cake.Core.Utilities;
 using Cake.Core;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Cake.CocoaPods
 {
@@ -27,18 +28,21 @@ namespace Cake.CocoaPods
         /// Gets or sets a value indicating whether or not to integrate the pods into an xcode project.
         /// </summary>
         /// <value><c>true</c> to not integrate into a project; otherwise, <c>false</c>.</value>
+        [Obsolete ("Not available in CocoaPods >= 1.0")]
         public bool NoIntegrate { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether or not to clean .
         /// </summary>
         /// <value><c>true</c> if no cleaning should occur; otherwise, <c>false</c>.</value>
+        [Obsolete ("Not available in CocoaPods >= 1.0")]
         public bool NoClean { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether or not to update the repo.
         /// </summary>
         /// <value><c>true</c> if repo should not be updated; otherwise, <c>false</c>.</value>
+        [Obsolete ("Not available in CocoaPods >= 1.0")]
         public bool NoRepoUpdate { get; set; }
 
         /// <summary>
@@ -69,12 +73,14 @@ namespace Cake.CocoaPods
         /// Gets or sets a value indicating whether or not to integrate the pods into an xcode project.
         /// </summary>
         /// <value><c>true</c> to not integrate into a project; otherwise, <c>false</c>.</value>
+        [Obsolete ("Not available in CocoaPods >= 1.0")]
         public bool NoIntegrate { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether or not to clean .
         /// </summary>
         /// <value><c>true</c> if no cleaning should occur; otherwise, <c>false</c>.</value>
+        [Obsolete ("Not available in CocoaPods >= 1.0")]
         public bool NoClean { get; set; }
 
         /// <summary>
@@ -130,23 +136,37 @@ namespace Cake.CocoaPods
             };
         }
 
-        public void Install (DirectoryPath projectDirectory, CocoaPodInstallSettings settings)
+        public void Install (ICakeContext context, DirectoryPath projectDirectory, CocoaPodInstallSettings settings)
         {
             if (settings == null)
                 settings = new CocoaPodInstallSettings ();
-            
+
+            var version = GetVersion (settings);
+
             var builder = new ProcessArgumentBuilder ();
 
             builder.Append ("install");
 
-            if (settings.NoClean)
-                builder.Append ("--no-clean");
+            if (version < new Version (1, 0)) {
+                if (settings.NoClean)
+                    builder.Append ("--no-clean");
 
-            if (settings.NoIntegrate)
-                builder.Append ("--no-integrate");
+                if (settings.NoIntegrate)
+                    builder.Append ("--no-integrate");
 
-            if (settings.NoRepoUpdate)
-                builder.Append ("--no-repo-update");
+                if (settings.NoRepoUpdate)
+                    builder.Append ("--no-repo-update");
+            } else {
+
+                if (settings.NoClean)
+                    Warn (context, "--no-clean is not a valid option for CocoaPods >= 1.0");
+                if (settings.NoIntegrate)
+                    Warn (context, "--no-integrate is not a valid option for CocoaPods >= 1.0"
+                                     + Environment.NewLine
+                                    + "Use `install! 'cocoapods', :integrate_targets => false` in your Podfile instead");
+                if (settings.NoRepoUpdate)
+                    Warn (context, "--no-repo-update is not a valid option for CocoaPods >= 1.0");
+            }
 
             if (settings.Silent)
                 builder.Append ("--silent");
@@ -163,8 +183,13 @@ namespace Cake.CocoaPods
             Run (settings, builder, settings.ToolPath);
         }
 
-        public void Update (DirectoryPath projectDirectory, string[] podNames, CocoaPodUpdateSettings settings)
+        public void Update (ICakeContext context, DirectoryPath projectDirectory, string[] podNames, CocoaPodUpdateSettings settings)
         {
+            if (settings == null)
+                settings = new CocoaPodUpdateSettings ();
+            
+            var version = GetVersion (settings);
+
             var builder = new ProcessArgumentBuilder ();
 
             builder.Append ("update");
@@ -174,11 +199,21 @@ namespace Cake.CocoaPods
                     builder.Append (pn);
             }
 
-            if (settings.NoClean)
-                builder.Append ("--no-clean");
+            if (version < new Version (1, 0)) {
+                if (settings.NoClean)
+                    builder.Append ("--no-clean");
 
-            if (settings.NoIntegrate)
-                builder.Append ("--no-integrate");
+                if (settings.NoIntegrate)
+                    builder.Append ("--no-integrate");
+            } else {
+
+                if (settings.NoClean)
+                    Warn (context, "--no-clean is not a valid option for CocoaPods >= 1.0");
+                if (settings.NoIntegrate)
+                    Warn (context, "--no-integrate is not a valid option for CocoaPods >= 1.0"
+                                     + Environment.NewLine
+                                    + "Use `install! 'cocoapods', :integrate_targets => false` in your Podfile instead");
+            }
 
             if (settings.NoRepoUpdate)
                 builder.Append ("--no-repo-update");
@@ -199,6 +234,36 @@ namespace Cake.CocoaPods
                 Run (settings, builder);
             else
                 Run (settings, builder, settings.ToolPath);
+        }
+
+        public Version GetVersion (CocoaPodSettings settings)
+        {
+            var s = settings ?? new CocoaPodSettings ();
+
+            var builder = new ProcessArgumentBuilder ();
+
+            builder.Append ("--version");
+            var process = RunProcess (s, builder, s.ToolPath, new ProcessSettings {
+                RedirectStandardOutput = true
+            });
+
+
+            process.WaitForExit ();
+
+            var text = process.GetStandardOutput ().ToList ();
+
+            foreach (var line in text) {
+                Version tmpVersion;
+                if (Version.TryParse (line.Trim (), out tmpVersion))
+                    return tmpVersion;
+            }
+
+            return null;
+        }
+
+        void Warn (ICakeContext context, string text, params object[] args)
+        {
+            context.Log.Write (Core.Diagnostics.Verbosity.Normal, Core.Diagnostics.LogLevel.Warning, text, args);
         }
     }
 }
