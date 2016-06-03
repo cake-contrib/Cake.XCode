@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Cake.CocoaPods;
 using Cake.Common.IO;
 using Cake.Core.IO;
@@ -33,9 +34,34 @@ namespace Cake.XCode.Tests
         }
 
         [Test]
+        public void PodVersion ()
+        {
+            var version = context.CakeContext.CocoaPodVersion ();
+
+            Assert.IsNotNull (version);
+        }
+
+        [Test]
         public void PodInstall ()
-        {            
-            context.CakeContext.CopyFile ("./TestProjects/PodInstall/Podfile", "./TestProjects/tmp/Podfile");
+        {
+            var podfile = new List<string> {
+                "platform :ios, '7.0'",
+                "install! 'cocoapods', :integrate_targets => false",
+                "target 'Xamarin' do",
+                "  use_frameworks!",
+                "end",
+                "pod 'GoogleAnalytics', '3.13'"
+            };
+
+            var version = context.CakeContext.CocoaPodVersion ();
+
+            if (version < new Version (1, 0))
+                podfile.RemoveRange (0, 4);
+            
+            var f = new FilePath ("./TestProjects/tmp/Podfile")
+                .MakeAbsolute (context.CakeContext.Environment).FullPath;
+            System.IO.File.WriteAllLines (f, podfile.ToArray ());
+
             context.CakeContext.CocoaPodInstall ("./TestProjects/tmp/", new CocoaPodInstallSettings {
                 NoIntegrate = true
             });
@@ -47,7 +73,24 @@ namespace Cake.XCode.Tests
         [Test]
         public void PodUpdate ()
         {
-            context.CakeContext.CopyFile ("./TestProjects/PodUpdate/Podfile", "./TestProjects/tmp/Podfile");
+            var podfile = new List<string> {
+                "platform :ios, '7.0'",
+                "install! 'cocoapods', :integrate_targets => false",
+                "target 'Xamarin' do",
+                "  use_frameworks!",
+                "end",
+                "pod 'GoogleAnalytics', '~> 3.12'"
+            };
+
+            var version = context.CakeContext.CocoaPodVersion ();
+
+            if (version < new Version (1, 0))
+                podfile.RemoveRange (0, 4);
+
+            var f = new FilePath ("./TestProjects/tmp/Podfile")
+                .MakeAbsolute (context.CakeContext.Environment).FullPath;
+            System.IO.File.WriteAllLines (f, podfile.ToArray ());
+
             context.CakeContext.CocoaPodInstall ("./TestProjects/tmp/", new CocoaPodInstallSettings {
                 NoIntegrate = true
             });
