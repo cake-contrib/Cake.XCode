@@ -15,6 +15,7 @@ namespace Cake.XCode
         /// </summary>
         /// <returns>The xcode sdks.</returns>
         /// <param name="context">The context.</param>
+        [CakeMethodAlias]
         public static IEnumerable<XCodeSdk> XCodeSdks (this ICakeContext context)
         {
             return XCodeSdks (context, new XCodeSettings ());
@@ -26,6 +27,7 @@ namespace Cake.XCode
         /// <returns>The xcode sdks.</returns>
         /// <param name="context">The context.</param> 
         /// <param name="settings">The settings.</param>
+        [CakeMethodAlias]
         public static IEnumerable<XCodeSdk> XCodeSdks (this ICakeContext context, XCodeSettings settings)
         {
             var r = new XCodeBuildRunner (context.FileSystem, context.Environment, context.ProcessRunner, context.Globber);
@@ -37,6 +39,7 @@ namespace Cake.XCode
         /// </summary>
         /// <param name="context">The context.</param>
         /// <param name="settings">The settings.</param>
+        [CakeMethodAlias]
         public static void XCodeBuild (this ICakeContext context, XCodeBuildSettings settings)
         {
             var r = new XCodeBuildRunner (context.FileSystem, context.Environment, context.ProcessRunner, context.Globber);
