@@ -2,6 +2,7 @@
 using Cake.Core.IO;
 using Cake.Core;
 using System.Collections.Generic;
+using Cake.Core.Tooling;
 
 namespace Cake.XCode.Tests.Fakes
 {
@@ -14,8 +15,7 @@ namespace Cake.XCode.Tests.Fakes
         public FakeCakeContext ()
         {
             testsDir = new DirectoryPath (
-                System.IO.Path.GetFullPath(
-                    System.IO.Path.Combine (AppDomain.CurrentDomain.BaseDirectory, "../../")));
+                System.IO.Path.GetDirectoryName (System.Reflection.Assembly.GetExecutingAssembly ().Location));
 
             var fileSystem = new FileSystem ();
             var environment = new CakeEnvironment ();
@@ -24,8 +24,12 @@ namespace Cake.XCode.Tests.Fakes
             var args = new FakeCakeArguments ();
             var processRunner = new ProcessRunner (environment, log);
             var registry = new WindowsRegistry ();
+            var toolRepo = new ToolRepository (environment);
+            var config = new Core.Configuration.CakeConfigurationProvider (fileSystem, environment).CreateConfiguration (new Dictionary<string, string> ());
+            var toolResStrat = new ToolResolutionStrategy (fileSystem, environment, globber, config);
+            var toolLocator = new ToolLocator (environment, toolRepo, toolResStrat);
 
-            context = new CakeContext (fileSystem, environment, globber, log, args, processRunner, registry);
+            context = new CakeContext (fileSystem, environment, globber, log, args, processRunner, registry, toolLocator);
             context.Environment.WorkingDirectory = testsDir;
         }
 
