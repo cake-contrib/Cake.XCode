@@ -31,7 +31,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="Cake.Core">
-      <HintPath>..\packages\Cake.Core.0.5.4\lib\net45\Cake.Core.dll</HintPath>
+      <HintPath>..\packages\Cake.Core.0.12.0\lib\net45\Cake.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -42,8 +42,8 @@
     <Compile Include="XCodeAliases.cs" />
     <Compile Include="Namespaces.cs" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
