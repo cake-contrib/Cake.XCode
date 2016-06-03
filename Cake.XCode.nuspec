@@ -2,7 +2,7 @@
 <package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
       <id>Cake.XCode</id>
-      <version>1.0.3</version>
+      <version>$version$</version>
       <authors>Redth</authors>
       <owners>Redth</owners>
       <title>Cake.XCode</title>
@@ -17,7 +17,8 @@
       <tags>Cake Script Build XCode CocoaPods Pod</tags>
 
       <dependencies>
-         <dependency id="Cake.Core" version="0.5.4" />
+         <dependency id="Cake.Core" version="0.12.0" />
+         <dependency id="Cake.Common" version="0.12.0" />
       </dependencies>
    </metadata>
 
