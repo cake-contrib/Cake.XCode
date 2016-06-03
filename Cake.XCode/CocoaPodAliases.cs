@@ -15,6 +15,7 @@ namespace Cake.CocoaPods
         /// </summary>
         /// <param name="context">The context.</param>
         /// <param name="projectDirectory">The project directory.</param>
+        [CakeMethodAlias]
         public static void CocoaPodInstall (this ICakeContext context, DirectoryPath projectDirectory)
         {
             CocoaPodInstall (context, projectDirectory, null);
@@ -26,10 +27,11 @@ namespace Cake.CocoaPods
         /// <param name="context">The context.</param>
         /// <param name="projectDirectory">The project directory.</param>
         /// <param name="settings">The settings.</param>
+        [CakeMethodAlias]
         public static void CocoaPodInstall (this ICakeContext context, DirectoryPath projectDirectory, CocoaPodInstallSettings settings)
         {
             var r = new CocoaPodRunner (context.FileSystem, context.Environment, context.ProcessRunner, context.Globber);
-            r.Install (projectDirectory, settings);
+            r.Install (context, projectDirectory, settings);
         }
 
         /// <summary>
@@ -37,6 +39,7 @@ namespace Cake.CocoaPods
         /// </summary>
         /// <param name="context">The context.</param>
         /// <param name="projectDirectory">The project directory.</param>
+        [CakeMethodAlias]
         public static void CocoaPodUpdate (this ICakeContext context, DirectoryPath projectDirectory)
         {
             CocoaPodUpdate (context, projectDirectory, null, new CocoaPodUpdateSettings ());
@@ -48,6 +51,7 @@ namespace Cake.CocoaPods
         /// <param name="context">The context.</param>
         /// <param name="projectDirectory">The project directory.</param>
         /// <param name="settings">The settings.</param>
+        [CakeMethodAlias]
         public static void CocoaPodUpdate (this ICakeContext context, DirectoryPath projectDirectory, CocoaPodUpdateSettings settings)
         {
             CocoaPodUpdate (context, projectDirectory, null, settings);
@@ -60,10 +64,33 @@ namespace Cake.CocoaPods
         /// <param name="projectDirectory">The project directory.</param>
         /// <param name="podNames">The specific pod names to update.</param>
         /// <param name="settings">The settings.</param>
+        [CakeMethodAlias]
         public static void CocoaPodUpdate (this ICakeContext context, DirectoryPath projectDirectory, string[] podNames, CocoaPodUpdateSettings settings)
         {
             var r = new CocoaPodRunner (context.FileSystem, context.Environment, context.ProcessRunner, context.Globber);
-            r.Update (projectDirectory, podNames, settings);
+            r.Update (context, projectDirectory, podNames, settings);
+        }
+
+        /// <summary>
+        /// Returns the version of CocoaPods
+        /// </summary>
+        /// <returns>The pod version.</returns>
+        /// <param name="context">The context.</param>
+        public static System.Version CocoaPodVersion (this ICakeContext context)
+        {
+            return CocoaPodVersion (context, new CocoaPodSettings ());
+        }
+
+        /// <summary>
+        /// Returns the version of CocoaPods
+        /// </summary>
+        /// <returns>The pod version.</returns>
+        /// <param name="context">The context.</param>
+        /// <param name="settings">The settings.</param>
+        public static System.Version CocoaPodVersion (this ICakeContext context, CocoaPodSettings settings)
+        {
+            var r = new CocoaPodRunner (context.FileSystem, context.Environment, context.ProcessRunner, context.Globber);
+            return r.GetVersion (settings);
         }
     }
 }
