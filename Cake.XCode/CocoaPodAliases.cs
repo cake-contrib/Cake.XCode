@@ -94,5 +94,29 @@ namespace Cake.CocoaPods
             var r = new CocoaPodRunner (context.FileSystem, context.Environment, context.ProcessRunner, context.Globber);
             return r.GetVersion (settings);
         }
+
+        /// <summary>
+        /// Updates the CocoaPods repo
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="settings">The settings.</param>
+        [CakeMethodAlias]
+        public static void CocoaPodRepoUpdate (this ICakeContext context)
+        {
+            var r = new CocoaPodRunner (context.FileSystem, context.Environment, context.ProcessRunner, context.Globber);
+            r.RepoUpdate (new CocoaPodSettings ());
+        }
+
+        /// <summary>
+        /// Updates the CocoaPods repo
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="settings">The settings.</param>
+        [CakeMethodAlias]
+        public static void CocoaPodRepoUpdate (this ICakeContext context, CocoaPodSettings settings)
+        {
+            var r = new CocoaPodRunner (context.FileSystem, context.Environment, context.ProcessRunner, context.Globber);
+            r.RepoUpdate (settings);
+        }
     }
 }

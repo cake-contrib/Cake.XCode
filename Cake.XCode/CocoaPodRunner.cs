@@ -261,6 +261,17 @@ namespace Cake.CocoaPods
             return null;
         }
 
+        public void RepoUpdate (CocoaPodSettings settings)
+        {
+            var builder = new ProcessArgumentBuilder ();
+            builder.Append ("repo");
+            builder.Append ("update");
+
+            var process = RunProcess (settings, builder);
+
+            process.WaitForExit ();
+        }
+
         void Warn (ICakeContext context, string text, params object[] args)
         {
             context.Log.Write (Core.Diagnostics.Verbosity.Normal, Core.Diagnostics.LogLevel.Warning, text, args);
