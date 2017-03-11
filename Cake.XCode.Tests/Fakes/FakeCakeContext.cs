@@ -19,14 +19,14 @@ namespace Cake.XCode.Tests.Fakes
                 System.IO.Path.GetDirectoryName (System.Reflection.Assembly.GetExecutingAssembly ().Location));
 
             log = new FakeLog ();
-            var environment = FakeEnvironment.CreateUnixEnvironment ();
-            var fileSystem = new FakeFileSystem (environment);
+            var fileSystem = new FileSystem ();
+			var environment = new FakeEnvironment (PlatformFamily.OSX);
             var globber = new Globber (fileSystem, environment);
             var args = new FakeCakeArguments ();
             var processRunner = new ProcessRunner (environment, log);
             var registry = new WindowsRegistry ();
             var toolRepo = new ToolRepository (environment);
-            var config = new FakeConfiguration ();
+			var config = new Core.Configuration.CakeConfigurationProvider (fileSystem, environment).CreateConfiguration (testsDir, new Dictionary<string, string> ());
             var toolResStrat = new ToolResolutionStrategy (fileSystem, environment, globber, config);
             var toolLocator = new ToolLocator (environment, toolRepo, toolResStrat);
 
