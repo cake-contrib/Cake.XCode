@@ -34,6 +34,7 @@ namespace Cake.XCode.Tests.Fakes
         public Verbosity Verbosity
         {
             get { return Verbosity.Diagnostic; }
+            set { }
         }
 
         /// <summary>

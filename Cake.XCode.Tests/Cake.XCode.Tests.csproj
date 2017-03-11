@@ -33,13 +33,13 @@
       <HintPath>..\packages\NUnit.3.0.1\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="Cake.Core">
-      <HintPath>..\packages\Cake.Core.0.12.0\lib\net45\Cake.Core.dll</HintPath>
+      <HintPath>..\packages\Cake.Core.0.18.0\lib\net45\Cake.Core.dll</HintPath>
     </Reference>
     <Reference Include="Cake.Common">
-      <HintPath>..\packages\Cake.Common.0.12.0\lib\net45\Cake.Common.dll</HintPath>
+      <HintPath>..\packages\Cake.Common.0.18.0\lib\net45\Cake.Common.dll</HintPath>
     </Reference>
     <Reference Include="Cake.Testing">
-      <HintPath>..\packages\Cake.Testing.0.12.0\lib\net45\Cake.Testing.dll</HintPath>
+      <HintPath>..\packages\Cake.Testing.0.18.0\lib\net45\Cake.Testing.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

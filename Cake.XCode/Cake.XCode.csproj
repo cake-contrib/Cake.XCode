@@ -31,7 +31,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="Cake.Core">
-      <HintPath>..\packages\Cake.Core.0.12.0\lib\net45\Cake.Core.dll</HintPath>
+      <HintPath>..\packages\Cake.Core.0.18.0\lib\net45\Cake.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

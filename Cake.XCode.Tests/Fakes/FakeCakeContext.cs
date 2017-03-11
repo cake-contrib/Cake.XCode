@@ -3,6 +3,7 @@ using Cake.Core.IO;
 using Cake.Core;
 using System.Collections.Generic;
 using Cake.Core.Tooling;
+using Cake.Testing;
 
 namespace Cake.XCode.Tests.Fakes
 {
@@ -17,15 +18,15 @@ namespace Cake.XCode.Tests.Fakes
             testsDir = new DirectoryPath (
                 System.IO.Path.GetDirectoryName (System.Reflection.Assembly.GetExecutingAssembly ().Location));
 
-            var fileSystem = new FileSystem ();
-            var environment = new CakeEnvironment ();
-            var globber = new Globber (fileSystem, environment);
             log = new FakeLog ();
+            var environment = FakeEnvironment.CreateUnixEnvironment ();
+            var fileSystem = new FakeFileSystem (environment);
+            var globber = new Globber (fileSystem, environment);
             var args = new FakeCakeArguments ();
             var processRunner = new ProcessRunner (environment, log);
             var registry = new WindowsRegistry ();
             var toolRepo = new ToolRepository (environment);
-            var config = new Core.Configuration.CakeConfigurationProvider (fileSystem, environment).CreateConfiguration (new Dictionary<string, string> ());
+            var config = new FakeConfiguration ();
             var toolResStrat = new ToolResolutionStrategy (fileSystem, environment, globber, config);
             var toolLocator = new ToolLocator (environment, toolRepo, toolResStrat);
 
