@@ -12,13 +12,11 @@
       <projectUrl>https://github.com/Redth/Cake.XCode</projectUrl>
       <iconUrl>https://raw.githubusercontent.com/Redth/Cake.XCode/master/icon.png</iconUrl>
       <requireLicenseAcceptance>false</requireLicenseAcceptance>
-      <copyright>Copyright (c) Redth 2015</copyright>
+      <copyright>Copyright (c) Redth 2015-2017</copyright>
       <releaseNotes>Initial Release</releaseNotes>
       <tags>Cake Script Build XCode CocoaPods Pod</tags>
 
       <dependencies>
-         <dependency id="Cake.Core" version="0.12.0" />
-         <dependency id="Cake.Common" version="0.12.0" />
       </dependencies>
    </metadata>
 
