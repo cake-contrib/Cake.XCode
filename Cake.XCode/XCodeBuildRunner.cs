@@ -228,6 +228,12 @@ namespace Cake.XCode
         public bool Clean { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether project should be archived.
+        /// </summary>
+        /// <value><c>true</c> if project should be archived; otherwise, <c>false</c>.</value>
+        public bool Archive { get; set; }
+
+        /// <summary>
         /// Export format type.
         /// </summary>
         public enum ExportFormatType
@@ -385,7 +391,14 @@ namespace Cake.XCode
             if (!string.IsNullOrEmpty (settings.ExportLanguage))
                 builder.Append ("-exportLanguage " + settings.ExportLanguage);
 
-            builder.Append ("build");
+            if (settings.Archive)
+            {
+                builder.Append ("archive");
+            }
+            else
+            {
+                builder.Append ("build");
+            }
 
             if (settings.Clean)
                 builder.Append ("clean");
