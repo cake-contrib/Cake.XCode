@@ -4,17 +4,15 @@ using Cake.CocoaPods;
 using Cake.Common.IO;
 using Cake.Core.IO;
 using Cake.XCode.Tests.Fakes;
-using NUnit.Framework;
+using Xunit;
 
 namespace Cake.XCode.Tests
 {
-    [TestFixture, Category ("XCodeTests")]
-    public class XCodeTests
+    public class XCodeTests : IDisposable
     {
         FakeCakeContext context;
 
-        [SetUp]
-        public void Setup ()
+        public XCodeTests ()
         {
             context = new FakeCakeContext ();
 
@@ -26,22 +24,21 @@ namespace Cake.XCode.Tests
 
             context.CakeContext.CreateDirectory ("./TestProjects/tmp");
         }
-
-        [TearDown]
-        public void Teardown ()
+        
+        public void Dispose ()
         {
             context.DumpLogs ();
         }
 
-        [Test]
+        [Fact]
         public void PodVersion ()
         {
             var version = context.CakeContext.CocoaPodVersion ();
 
-            Assert.IsNotNull (version);
+            Assert.NotNull (version);
         }
 
-        [Test]
+        [Fact]
         public void PodInstall ()
         {
             var podfile = new List<string> {
@@ -66,11 +63,11 @@ namespace Cake.XCode.Tests
                 NoIntegrate = true
             });
 
-            Assert.IsTrue (context.CakeContext.FileExists ("./TestProjects/tmp/Podfile.lock"));
-            Assert.IsTrue (context.CakeContext.DirectoryExists ("./TestProjects/tmp/Pods/GoogleAnalytics"));
+            Assert.True (context.CakeContext.FileExists ("./TestProjects/tmp/Podfile.lock"));
+            Assert.True (context.CakeContext.DirectoryExists ("./TestProjects/tmp/Pods/GoogleAnalytics"));
         }
 
-        [Test]
+        [Fact]
         public void PodUpdate ()
         {
             var podfile = new List<string> {
@@ -95,8 +92,8 @@ namespace Cake.XCode.Tests
                 NoIntegrate = true
             });
 
-            Assert.IsTrue (context.CakeContext.FileExists ("./TestProjects/tmp/Podfile.lock"));
-            Assert.IsTrue (context.CakeContext.DirectoryExists ("./TestProjects/tmp/Pods/GoogleAnalytics"));
+            Assert.True (context.CakeContext.FileExists ("./TestProjects/tmp/Podfile.lock"));
+            Assert.True (context.CakeContext.DirectoryExists ("./TestProjects/tmp/Pods/GoogleAnalytics"));
 
             context.CakeContext.CocoaPodUpdate ("./TestProjects/tmp/", new CocoaPodUpdateSettings {
                 NoIntegrate = true
@@ -105,18 +102,18 @@ namespace Cake.XCode.Tests
             var pfl = new FilePath ("./TestProjects/tmp/Podfile.lock");
             var text = System.IO.File.ReadAllText (pfl.MakeAbsolute (context.CakeContext.Environment).FullPath);
 
-            Assert.IsFalse (text.Contains ("- GoogleAnalytics (3.12.0)"));
+            Assert.False (text.Contains ("- GoogleAnalytics (3.12.0)"));
         }
 
-        [Test]
+        [Fact]
         public void XCodeSDKs ()
         {
             var sdks = context.CakeContext.XCodeSdks ();
 
-            Assert.IsNotEmpty (sdks);
+            Assert.NotEmpty (sdks);
         }
 
-        [Test]
+        [Fact]
         public void XCodeBuild ()
         {
             context.CakeContext.CopyDirectory ("./TestProjects/XCodeProject/", "./TestProjects/tmp/");
@@ -133,7 +130,7 @@ namespace Cake.XCode.Tests
                 Clean = true
             });
 
-            Assert.IsTrue (context.CakeContext.DirectoryExists ("./TestProjects/tmp/build/Build/"));
+            Assert.True (context.CakeContext.DirectoryExists ("./TestProjects/tmp/build/Build/"));
         }
     }
 }

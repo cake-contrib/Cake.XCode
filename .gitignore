@@ -10,3 +10,5 @@ nupkg/
 xtc-api-key
 xtc-email
 tmp/
+BuildArtifacts/
+.vs/

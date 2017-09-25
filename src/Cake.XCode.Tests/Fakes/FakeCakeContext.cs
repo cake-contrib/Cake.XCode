@@ -15,8 +15,7 @@ namespace Cake.XCode.Tests.Fakes
 
         public FakeCakeContext ()
         {
-            testsDir = new DirectoryPath (
-                System.IO.Path.GetDirectoryName (System.Reflection.Assembly.GetExecutingAssembly ().Location));
+            testsDir = new DirectoryPath (System.IO.Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", ".."));
 
             var fileSystem = new FileSystem ();
 			var environment = new FakeEnvironment (PlatformFamily.OSX);
