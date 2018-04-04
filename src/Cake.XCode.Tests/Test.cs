@@ -15,9 +15,10 @@ namespace Cake.XCode.Tests
         public XCodeTests ()
         {
             context = new FakeCakeContext ();
+            context.CakeContext.Environment.WorkingDirectory = System.IO.Path.Combine(Environment.CurrentDirectory, "..", "..", "..", "..", "..");
 
-            context.CakeContext.CleanDirectories ("./TestProjects/**/bin");
-            context.CakeContext.CleanDirectories ("./TestProjects/**/obj");
+            //context.CakeContext.CleanDirectories("./TestProjects/**/bin");
+            //context.CakeContext.CleanDirectories("./TestProjects/**/obj");
 
             if (context.CakeContext.DirectoryExists ("./TestProjects/tmp"))
                 context.CakeContext.DeleteDirectory ("./TestProjects/tmp", true);
@@ -64,7 +65,7 @@ namespace Cake.XCode.Tests
             });
 
             Assert.True (context.CakeContext.FileExists ("./TestProjects/tmp/Podfile.lock"));
-            Assert.True (context.CakeContext.DirectoryExists ("./TestProjects/tmp/Pods/GoogleAnalytics"));
+            Assert.True (context.CakeContext.FileExists ("./TestProjects/tmp/Pods/GoogleAnalytics/Libraries/libGoogleAnalytics.a"));
         }
 
         [Fact]
@@ -93,7 +94,7 @@ namespace Cake.XCode.Tests
             });
 
             Assert.True (context.CakeContext.FileExists ("./TestProjects/tmp/Podfile.lock"));
-            Assert.True (context.CakeContext.DirectoryExists ("./TestProjects/tmp/Pods/GoogleAnalytics"));
+            Assert.True (context.CakeContext.FileExists ("./TestProjects/tmp/Pods/GoogleAnalytics/Libraries/libGoogleAnalytics.a"));
 
             context.CakeContext.CocoaPodUpdate ("./TestProjects/tmp/", new CocoaPodUpdateSettings {
                 NoIntegrate = true
