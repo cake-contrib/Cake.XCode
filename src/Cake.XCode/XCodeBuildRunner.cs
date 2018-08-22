@@ -176,6 +176,12 @@ namespace Cake.XCode
         public DirectoryPath ExportPath { get; set; }
 
         /// <summary>
+        /// Specifies the location of the plist file used as options in the export process.
+        /// </summary>
+        /// <value>The path to plist.</value>
+        public DirectoryPath ExportOptionsPlist { get; set; }
+
+        /// <summary>
         /// Specifies the provisioning profile that should be used when re-signing the exported archive; if possible, implies a signing identity
         /// </summary>
         /// <value>The export provisioning profile name.</value>
@@ -226,6 +232,12 @@ namespace Cake.XCode
         /// </summary>
         /// <value><c>true</c> if project should be cleaned; otherwise, <c>false</c>.</value>
         public bool Clean { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether project should be archived instead of builded.
+        /// </summary>
+        /// <value><c>true</c> if project should be archive; otherwise, <c>false</c>.</value>
+        public bool Archive { get; set; }
 
         /// <summary>
         /// Export format type.
@@ -361,6 +373,9 @@ namespace Cake.XCode
             if (settings.ExportPath != null)
                 builder.Append ("-exportPath " + GetQuotedAbsolute (settings.ExportPath));
 
+            if (settings.ExportOptionsPlist != null)
+                builder.Append("-exportOptionsPlist " + GetQuotedAbsolute(settings.ExportOptionsPlist));
+
             if (!string.IsNullOrEmpty (settings.ExportProvisioningProfile))
                 builder.Append ("-exportProvisioningProfile " + settings.ExportProvisioningProfile);
 
@@ -385,7 +400,10 @@ namespace Cake.XCode
             if (!string.IsNullOrEmpty (settings.ExportLanguage))
                 builder.Append ("-exportLanguage " + settings.ExportLanguage);
 
-            builder.Append ("build");
+            if(settings.Archive)
+                builder.Append("archive");
+            else
+                builder.Append ("build");
 
             if (settings.Clean)
                 builder.Append ("clean");
