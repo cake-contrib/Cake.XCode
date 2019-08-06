@@ -12,10 +12,12 @@
     <Description>Cake Build addon for XCode and CocoaPods.</Description>
     <PackageTags>Cake Script Build XCode CocoaPods Pod</PackageTags>
     <Authors>Redth</Authors>
-    <Owners>Redth</Owners>
-    <PackageProjectUrl>https://github.com/redth/Cake.XCode</PackageProjectUrl>
+    <Owners>Redth, cake-contrib</Owners>
+    <PackageProjectUrl>https://github.com/cake-contrib/Cake.XCode</PackageProjectUrl>
     <PackageIconUrl>https://cdn.jsdelivr.net/gh/cake-contrib/graphics/png/cake-contrib-medium.png</PackageIconUrl>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/redth/Cake.XCode/master/LICENSE.md</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/cake-contrib/Cake.XCode.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
