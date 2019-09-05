@@ -227,6 +227,12 @@ namespace Cake.XCode
         /// <value>The export language.</value>
         public string ExportLanguage { get; set; }
 
+		/// <summary>
+		/// Overrides specified build settings or adds User-Defined build settings
+		/// </summary>
+		/// <value>The build settings key value pairs.</value>
+		public Dictionary<string, string> BuildSettings { get; set; }
+
         /// <summary>
         /// Gets or sets a value indicating whether project should be cleaned.
         /// </summary>
@@ -408,6 +414,8 @@ namespace Cake.XCode
             if (settings.Clean)
                 builder.Append ("clean");
 
+			if (settings.BuildSettings != null && settings.BuildSettings.Count > 0)
+				builder.Append(string.Join(" ", settings.BuildSettings.Select(kvp => string.Format("{0}={1}", kvp.Key, kvp.Value))));
 
             Run (settings, builder, settings.ToolPath);
         }

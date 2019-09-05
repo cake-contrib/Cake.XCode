@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Cake.CocoaPods;
 using Cake.Common.IO;
@@ -21,7 +21,7 @@ namespace Cake.XCode.Tests
             //context.CakeContext.CleanDirectories("./TestProjects/**/obj");
 
             if (context.CakeContext.DirectoryExists ("./TestProjects/tmp"))
-                context.CakeContext.DeleteDirectory ("./TestProjects/tmp", true);
+                context.CakeContext.DeleteDirectory ("./TestProjects/tmp", new DeleteDirectorySettings { Recursive = true });
 
             context.CakeContext.CreateDirectory ("./TestProjects/tmp");
         }
@@ -128,7 +128,12 @@ namespace Cake.XCode.Tests
                 Arch = "i386",
                 Configuration = "Release",
                 DerivedDataPath = "./TestProjects/tmp/build",
-                Clean = true
+                Clean = true,
+                BuildSettings = new Dictionary<string, string>
+                {
+                    { "ENABLE_BITCODE", "YES" },
+                    { "BITCODE_GENERATION_MODE", "bitcode" },
+                }
             });
 
             Assert.True (context.CakeContext.DirectoryExists ("./TestProjects/tmp/build/Build/"));
