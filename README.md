@@ -1,5 +1,5 @@
 # Cake.XCode
-A set of aliases for http://cakebuild.net to help with XCode and CocoaPods.
+A set of aliases for http://cakebuild.net to help with Xcode and CocoaPods.
 
 
 You can easily reference Cake.XCode directly in your build script via a cake addin:
