@@ -25,12 +25,12 @@ namespace Cake.XCode
         /// Gets the various SDK's installed and available on the machine
         /// </summary>
         /// <returns>The xcode sdks.</returns>
-        /// <param name="context">The context.</param> 
+        /// <param name="context">The context.</param>
         /// <param name="settings">The settings.</param>
         [CakeMethodAlias]
         public static IEnumerable<XCodeSdk> XCodeSdks (this ICakeContext context, XCodeSettings settings)
         {
-            var r = new XCodeBuildRunner (context.FileSystem, context.Environment, context.ProcessRunner, context.Globber);
+            var r = new XCodeBuildRunner (context.FileSystem, context.Environment, context.ProcessRunner, context.Tools);
             return r.ShowSdks (settings);
         }
 
@@ -42,7 +42,7 @@ namespace Cake.XCode
         [CakeMethodAlias]
         public static void XCodeBuild (this ICakeContext context, XCodeBuildSettings settings)
         {
-            var r = new XCodeBuildRunner (context.FileSystem, context.Environment, context.ProcessRunner, context.Globber);
+            var r = new XCodeBuildRunner (context.FileSystem, context.Environment, context.ProcessRunner, context.Tools);
             r.Build (settings);
         }
     }

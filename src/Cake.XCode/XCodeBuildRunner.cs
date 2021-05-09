@@ -1,10 +1,9 @@
-﻿using System;
+﻿using Cake.Core;
+using Cake.Core.IO;
+using Cake.Core.Tooling;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Cake.Core;
-using Cake.Core.IO;
-using Cake.Core.Utilities;
 
 namespace Cake.XCode
 {
@@ -29,13 +28,8 @@ namespace Cake.XCode
     /// <summary>
     /// XCode settings.
     /// </summary>
-    public class XCodeSettings
+    public class XCodeSettings : ToolSettings
     {
-        /// <summary>
-        /// Gets or sets the xcodebuild path.
-        /// </summary>
-        /// <value>The tool path.</value>
-        public FilePath ToolPath { get; set; }
     }
 
     /// <summary>
@@ -222,7 +216,7 @@ namespace Cake.XCode
         public DirectoryPath LocalizationPath { get; set; }
 
         /// <summary>
-        /// Specifies optional ISO 639-1 target languages included in a localization export 
+        /// Specifies optional ISO 639-1 target languages included in a localization export
         /// </summary>
         /// <value>The export language.</value>
         public string ExportLanguage { get; set; }
@@ -269,8 +263,8 @@ namespace Cake.XCode
     {
         readonly ICakeEnvironment _cakeEnvironment;
 
-        public XCodeBuildRunner (IFileSystem fileSystem, ICakeEnvironment cakeEnvironment, IProcessRunner processRunner, IGlobber globber)
-            : base (fileSystem, cakeEnvironment, processRunner, globber)
+        public XCodeBuildRunner (IFileSystem fileSystem, ICakeEnvironment cakeEnvironment, IProcessRunner processRunner, IToolLocator toolLocator)
+            : base (fileSystem, cakeEnvironment, processRunner, toolLocator)
         {
             _cakeEnvironment = cakeEnvironment;
         }
@@ -287,9 +281,9 @@ namespace Cake.XCode
 
         protected override IEnumerable<FilePath> GetAlternativeToolPaths (XCodeSettings settings)
         {
-            return new [] { 
+            return new [] {
                 new FilePath ("/usr/bin/xcodebuild"),
-                new FilePath ("/usr/local/bin/xcodebuild"), 
+                new FilePath ("/usr/local/bin/xcodebuild"),
                 new FilePath ("/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild")
             };
         }
@@ -322,7 +316,7 @@ namespace Cake.XCode
 
             if (settings.AllTargets)
                 builder.Append ("-alltargets");
-            
+
             if (settings.Workspace != null)
                 builder.Append ("-workspace " + GetQuotedAbsolute (settings.Workspace));
 
@@ -331,7 +325,7 @@ namespace Cake.XCode
 
             if (!string.IsNullOrEmpty (settings.Configuration))
                 builder.Append (string.Format ("-configuration \"{0}\"", settings.Configuration));
-                           
+
             if (settings.XcConfig != null)
                 builder.Append ("-xcconfig " + GetQuotedAbsolute (settings.XcConfig));
 
@@ -340,14 +334,14 @@ namespace Cake.XCode
 
             if (!string.IsNullOrEmpty (settings.Sdk))
                 builder.Append (string.Format ("-sdk \"{0}\"", settings.Sdk));
-            
+
             if (!string.IsNullOrEmpty (settings.Toolchain))
                 builder.Append (string.Format ("-toolchain \"{0}\"", settings.Toolchain));
 
             if (settings.Destination != null && settings.Destination.Count > 0) {
                 builder.Append ("-destination " +
                 string.Join (",", settings.Destination.Select (kvp => string.Format ("{0}={1}", kvp.Key, kvp.Value))));
-             
+
                 if (settings.DestinationTimeout.HasValue)
                     builder.Append ("-destination-timeout " + settings.DestinationTimeout.Value);
             }
@@ -363,7 +357,7 @@ namespace Cake.XCode
 
             if (settings.ResultBundlePath != null)
                 builder.Append ("-resultBundlePath " + GetQuotedAbsolute (settings.ResultBundlePath));
-            
+
             if (settings.DerivedDataPath != null)
                 builder.Append ("-derivedDataPath " + GetQuotedAbsolute (settings.DerivedDataPath));
 
@@ -402,7 +396,7 @@ namespace Cake.XCode
 
             if (settings.LocalizationPath != null)
                 builder.Append ("-localizationPath " + GetQuotedAbsolute (settings.LocalizationPath));
-            
+
             if (!string.IsNullOrEmpty (settings.ExportLanguage))
                 builder.Append ("-exportLanguage " + settings.ExportLanguage);
 
@@ -417,7 +411,7 @@ namespace Cake.XCode
 			if (settings.BuildSettings != null && settings.BuildSettings.Count > 0)
 				builder.Append(string.Join(" ", settings.BuildSettings.Select(kvp => string.Format("{0}={1}", kvp.Key, kvp.Value))));
 
-            Run (settings, builder, settings.ToolPath);
+            Run (settings, builder);
         }
 
         public IEnumerable<XCodeSdk> ShowSdks (XCodeSettings settings)
@@ -428,7 +422,7 @@ namespace Cake.XCode
 
             builder.Append ("-showsdks");
 
-            var process = this.RunProcess (settings, builder, settings.ToolPath, new ProcessSettings {
+            var process = this.RunProcess (settings, builder, new ProcessSettings {
                 RedirectStandardOutput = true,
             });
             process.WaitForExit ();

@@ -30,7 +30,7 @@ namespace Cake.CocoaPods
         [CakeMethodAlias]
         public static void CocoaPodInstall (this ICakeContext context, DirectoryPath projectDirectory, CocoaPodInstallSettings settings)
         {
-            var r = new CocoaPodRunner (context.FileSystem, context.Environment, context.ProcessRunner, context.Globber);
+            var r = new CocoaPodRunner (context.FileSystem, context.Environment, context.ProcessRunner, context.Tools);
             r.Install (context, projectDirectory, settings);
         }
 
@@ -67,7 +67,7 @@ namespace Cake.CocoaPods
         [CakeMethodAlias]
         public static void CocoaPodUpdate (this ICakeContext context, DirectoryPath projectDirectory, string[] podNames, CocoaPodUpdateSettings settings)
         {
-            var r = new CocoaPodRunner (context.FileSystem, context.Environment, context.ProcessRunner, context.Globber);
+            var r = new CocoaPodRunner (context.FileSystem, context.Environment, context.ProcessRunner, context.Tools);
             r.Update (context, projectDirectory, podNames, settings);
         }
 
@@ -91,7 +91,7 @@ namespace Cake.CocoaPods
         [CakeMethodAlias]
         public static System.Version CocoaPodVersion (this ICakeContext context, CocoaPodSettings settings)
         {
-            var r = new CocoaPodRunner (context.FileSystem, context.Environment, context.ProcessRunner, context.Globber);
+            var r = new CocoaPodRunner (context.FileSystem, context.Environment, context.ProcessRunner, context.Tools);
             return r.GetVersion (settings);
         }
 
@@ -103,7 +103,7 @@ namespace Cake.CocoaPods
         [CakeMethodAlias]
         public static void CocoaPodRepoUpdate (this ICakeContext context)
         {
-            var r = new CocoaPodRunner (context.FileSystem, context.Environment, context.ProcessRunner, context.Globber);
+            var r = new CocoaPodRunner (context.FileSystem, context.Environment, context.ProcessRunner, context.Tools);
             r.RepoUpdate (new CocoaPodSettings ());
         }
 
@@ -115,7 +115,7 @@ namespace Cake.CocoaPods
         [CakeMethodAlias]
         public static void CocoaPodRepoUpdate (this ICakeContext context, CocoaPodSettings settings)
         {
-            var r = new CocoaPodRunner (context.FileSystem, context.Environment, context.ProcessRunner, context.Globber);
+            var r = new CocoaPodRunner (context.FileSystem, context.Environment, context.ProcessRunner, context.Tools);
             r.RepoUpdate (settings);
         }
     }

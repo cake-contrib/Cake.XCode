@@ -25,7 +25,7 @@ namespace Cake.XCode.Tests
 
             context.CakeContext.CreateDirectory ("./TestProjects/tmp");
         }
-        
+
         public void Dispose ()
         {
             context.DumpLogs ();
@@ -55,7 +55,7 @@ namespace Cake.XCode.Tests
 
             if (version < new Version (1, 0))
                 podfile.RemoveRange (0, 4);
-            
+
             var f = new FilePath ("./TestProjects/tmp/Podfile")
                 .MakeAbsolute (context.CakeContext.Environment).FullPath;
             System.IO.File.WriteAllLines (f, podfile.ToArray ());
@@ -98,7 +98,7 @@ namespace Cake.XCode.Tests
 
             context.CakeContext.CocoaPodUpdate ("./TestProjects/tmp/", new CocoaPodUpdateSettings {
                 NoIntegrate = true
-            });       
+            });
 
             var pfl = new FilePath ("./TestProjects/tmp/Podfile.lock");
             var text = System.IO.File.ReadAllText (pfl.MakeAbsolute (context.CakeContext.Environment).FullPath);

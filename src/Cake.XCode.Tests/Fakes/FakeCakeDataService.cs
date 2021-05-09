@@ -6,7 +6,7 @@ namespace Cake.XCode.Tests.Fakes
 {
     public class FakeDataService : ICakeDataService
     {
-        List<object> values = new List<object>();
+        readonly List<object> values = new List<object>();
 
         public void Add<TData>(TData value) where TData : class
         {

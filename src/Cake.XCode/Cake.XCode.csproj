@@ -10,19 +10,19 @@
     <Title>Cake.XCode</Title>
     <Summary>XCode and CocoaPods addon for cake build.</Summary>
     <Description>Cake Build addon for XCode and CocoaPods.</Description>
-    <PackageTags>Cake Script Build XCode CocoaPods Pod</PackageTags>
+    <PackageTags>Cake Script Build XCode CocoaPods Pod cake-addin</PackageTags>
     <Authors>Redth</Authors>
     <Owners>Redth, cake-contrib</Owners>
     <PackageProjectUrl>https://github.com/cake-contrib/Cake.XCode</PackageProjectUrl>
-    <PackageIconUrl>https://cdn.jsdelivr.net/gh/cake-contrib/graphics/png/cake-contrib-medium.png</PackageIconUrl>
+    <PackageIconUrl>https://cdn.jsdelivr.net/gh/cake-contrib/graphics/png/addin/cake-contrib-addin-medium.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/cake-contrib/Cake.XCode.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cake.Core" Version="0.33.0" PrivateAssets="All" />
-    <PackageReference Include="Cake.Common" Version="0.33.0" PrivateAssets="All" />
+    <PackageReference Include="Cake.Core" Version="1.1.0" PrivateAssets="All" />
+    <PackageReference Include="Cake.Common" Version="1.1.0" PrivateAssets="All" />
   </ItemGroup>
 
 </Project>
