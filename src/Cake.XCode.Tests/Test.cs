@@ -43,12 +43,12 @@ namespace Cake.XCode.Tests
         public void PodInstall ()
         {
             var podfile = new List<string> {
-                "platform :ios, '7.0'",
+                "platform :ios, '9.0'",
                 "install! 'cocoapods', :integrate_targets => false",
                 "target 'Xamarin' do",
                 "  use_frameworks!",
                 "end",
-                "pod 'GoogleAnalytics', '3.13'"
+                "pod 'GoogleAnalytics', '3.17'"
             };
 
             var version = context.CakeContext.CocoaPodVersion ();
@@ -72,12 +72,12 @@ namespace Cake.XCode.Tests
         public void PodUpdate ()
         {
             var podfile = new List<string> {
-                "platform :ios, '7.0'",
+                "platform :ios, '9.0'",
                 "install! 'cocoapods', :integrate_targets => false",
                 "target 'Xamarin' do",
                 "  use_frameworks!",
                 "end",
-                "pod 'GoogleAnalytics', '~> 3.12'"
+                "pod 'GoogleAnalytics', '~> 3.16'"
             };
 
             var version = context.CakeContext.CocoaPodVersion ();
@@ -103,7 +103,7 @@ namespace Cake.XCode.Tests
             var pfl = new FilePath ("./TestProjects/tmp/Podfile.lock");
             var text = System.IO.File.ReadAllText (pfl.MakeAbsolute (context.CakeContext.Environment).FullPath);
 
-            Assert.False (text.Contains ("- GoogleAnalytics (3.12.0)"));
+            Assert.False (text.Contains ("- GoogleAnalytics (3.16.0)"));
         }
 
         [Fact]

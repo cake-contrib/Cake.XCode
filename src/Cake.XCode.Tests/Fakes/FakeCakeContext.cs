@@ -20,7 +20,7 @@ namespace Cake.XCode.Tests.Fakes
             var fileSystem = new FileSystem();
             log = new FakeLog();
             var runtime = new CakeRuntime();
-            var platform = new FakePlatform(PlatformFamily.Windows);
+            var platform = new FakePlatform(PlatformFamily.OSX);
             var environment = new CakeEnvironment(platform, runtime);
             var globber = new Globber(fileSystem, environment);
 
