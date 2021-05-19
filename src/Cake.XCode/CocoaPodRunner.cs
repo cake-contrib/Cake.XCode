@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Cake.Core;
 using Cake.Core.IO;
-using Cake.Core.Utilities;
-using Cake.Core;
+using Cake.Core.Tooling;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,13 +10,8 @@ namespace Cake.CocoaPods
     /// <summary>
     /// CocoaPod settings.
     /// </summary>
-    public class CocoaPodSettings
+    public class CocoaPodSettings : ToolSettings
     {
-        /// <summary>
-        /// Gets or sets the path to pod executable.
-        /// </summary>
-        /// <value>The tool path.</value>
-        public FilePath ToolPath { get; set; }
     }
 
     /// <summary>
@@ -112,8 +107,8 @@ namespace Cake.CocoaPods
     {
         readonly ICakeEnvironment _cakeEnvironment;
 
-        public CocoaPodRunner (IFileSystem fileSystem, ICakeEnvironment cakeEnvironment, IProcessRunner processRunner, IGlobber globber)
-            : base (fileSystem, cakeEnvironment, processRunner, globber)
+        public CocoaPodRunner (IFileSystem fileSystem, ICakeEnvironment cakeEnvironment, IProcessRunner processRunner, IToolLocator toolLocator)
+            : base (fileSystem, cakeEnvironment, processRunner, toolLocator)
         {
             _cakeEnvironment = cakeEnvironment;
         }
@@ -180,14 +175,14 @@ namespace Cake.CocoaPods
             if (projectDirectory != null)
                 builder.Append ("--project-directory=" + projectDirectory.MakeAbsolute (_cakeEnvironment).FullPath.Quote ());
 
-            Run (settings, builder, settings.ToolPath);
+            Run (settings, builder);
         }
 
         public void Update (ICakeContext context, DirectoryPath projectDirectory, string[] podNames, CocoaPodUpdateSettings settings)
         {
             if (settings == null)
                 settings = new CocoaPodUpdateSettings ();
-            
+
             var version = GetVersion (settings);
 
             var builder = new ProcessArgumentBuilder ();
@@ -233,7 +228,7 @@ namespace Cake.CocoaPods
             if (settings.ToolPath == null)
                 Run (settings, builder);
             else
-                Run (settings, builder, settings.ToolPath);
+                Run (settings, builder);
         }
 
         public Version GetVersion (CocoaPodSettings settings)
@@ -243,7 +238,7 @@ namespace Cake.CocoaPods
             var builder = new ProcessArgumentBuilder ();
 
             builder.Append ("--version");
-            var process = RunProcess (s, builder, s.ToolPath, new ProcessSettings {
+            var process = RunProcess (s, builder, new ProcessSettings {
                 RedirectStandardOutput = true
             });
 

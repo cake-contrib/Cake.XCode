@@ -25,7 +25,7 @@ namespace Cake.XCode.Tests
 
             context.CakeContext.CreateDirectory ("./TestProjects/tmp");
         }
-        
+
         public void Dispose ()
         {
             context.DumpLogs ();
@@ -43,19 +43,19 @@ namespace Cake.XCode.Tests
         public void PodInstall ()
         {
             var podfile = new List<string> {
-                "platform :ios, '7.0'",
+                "platform :ios, '9.0'",
                 "install! 'cocoapods', :integrate_targets => false",
                 "target 'Xamarin' do",
                 "  use_frameworks!",
                 "end",
-                "pod 'GoogleAnalytics', '3.13'"
+                "pod 'GoogleAnalytics', '3.17'"
             };
 
             var version = context.CakeContext.CocoaPodVersion ();
 
             if (version < new Version (1, 0))
                 podfile.RemoveRange (0, 4);
-            
+
             var f = new FilePath ("./TestProjects/tmp/Podfile")
                 .MakeAbsolute (context.CakeContext.Environment).FullPath;
             System.IO.File.WriteAllLines (f, podfile.ToArray ());
@@ -72,12 +72,12 @@ namespace Cake.XCode.Tests
         public void PodUpdate ()
         {
             var podfile = new List<string> {
-                "platform :ios, '7.0'",
+                "platform :ios, '9.0'",
                 "install! 'cocoapods', :integrate_targets => false",
                 "target 'Xamarin' do",
                 "  use_frameworks!",
                 "end",
-                "pod 'GoogleAnalytics', '~> 3.12'"
+                "pod 'GoogleAnalytics', '~> 3.16'"
             };
 
             var version = context.CakeContext.CocoaPodVersion ();
@@ -98,12 +98,12 @@ namespace Cake.XCode.Tests
 
             context.CakeContext.CocoaPodUpdate ("./TestProjects/tmp/", new CocoaPodUpdateSettings {
                 NoIntegrate = true
-            });       
+            });
 
             var pfl = new FilePath ("./TestProjects/tmp/Podfile.lock");
             var text = System.IO.File.ReadAllText (pfl.MakeAbsolute (context.CakeContext.Environment).FullPath);
 
-            Assert.False (text.Contains ("- GoogleAnalytics (3.12.0)"));
+            Assert.False (text.Contains ("- GoogleAnalytics (3.16.0)"));
         }
 
         [Fact]
