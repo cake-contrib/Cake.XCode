@@ -60,6 +60,11 @@ namespace Cake.XCode
         public string Target { get; set; }
 
         /// <summary>
+        /// Run tests with xcodebuild
+        /// </summary>
+        public bool Test { get; set; }
+
+        /// <summary>
         /// Builds all the targets
         /// </summary>
         public bool AllTargets { get; set; }
@@ -400,7 +405,10 @@ namespace Cake.XCode
             if (!string.IsNullOrEmpty (settings.ExportLanguage))
                 builder.Append ("-exportLanguage " + settings.ExportLanguage);
 
-            if(settings.Archive)
+            if (settings.Test)
+                builder.Append("test");
+
+            if (settings.Archive)
                 builder.Append("archive");
             else
                 builder.Append ("build");
